@@ -1,9 +1,19 @@
-# Project Title
+# Junction Safety System
 
 ## 1. System Integration
 
 ### Brief Description
-Provide a concise 200-300 word overview of your application or solution, explaining its relevance, distinguishing features, and a short literature review that highlights how it differs from other solutions. Include references and links as needed.
+The proposed Junction Safety System is designed to improve pedestrian safety at road junctions by warning approaching vehicles when pedestrians are detected near a crossing area.
+
+In this system, proximity sensors are installed at pedestrian traffic lights near the junction. These sensors continuously monitor the waiting area near the pedestrian crossing. When a pedestrian is detected within the sensing range, the system assumes that a pedestrian may intend to cross the road.
+
+Once the proximity sensor detects a pedestrian, the traffic light unit sends a signal to a nearby wireless communication relay unit (RSU). This relay unit broadcasts a warning message to approaching vehicles using short-range wireless communication.
+
+Vehicles equipped with the Junction Safety System receive this signal through their Onboard Unit (OBU). The vehicle then uses its current speed and navigation information to calculate the required braking distance needed to safely stop before the junction or pedestrian crossing.
+
+This braking distance is displayed to the driver through the Head-Up Display (HUD) on the windshield. The display provides the driver with a visual indication of how much distance is required to stop safely if a pedestrian begins crossing.
+
+By detecting pedestrians early and communicating this information to vehicles, the Junction Safety System helps drivers slow down earlier and reduce the risk of collisions at intersections.
 
 ### System Architecture
 Explain the overall architecture of your system. Include diagrams, figures, or drawings that show how components interact.
