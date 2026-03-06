@@ -22,7 +22,14 @@ Explain the overall architecture of your system. Include diagrams, figures, or d
 Describe the key functions and messages used by your system. You may include flow charts, pseudocode, or tables to illustrate how data flows between parts of the system.
 
 ### Hardware Components and Parameters
-List any hardware involved along with relevant parameters such as latency, ranges, bandwidths, etc. Tables are recommended for clarity.
+
+| # | Component | Function | Range | Latency | Bandwidth |
+|---|-----------|----------|-------|---------|-----------|
+| 1 | Pedestrian Traffic Light with Proximity Sensor | Detects pedestrians near crossing | 5-10m | <100ms | N/A |
+| 2 | Wireless Vehicle Communication Relay (RSU) | Broadcasts safety messages to vehicles | 100-500m | <50ms | 10 Mbps |
+| 3 | Vehicle with Junction Safety System (OBU + HUD) | Receives message and displays braking distance | Vehicle receiver | <100ms | 5 Mbps |
+
+
 
 ### Use Case
 Provide a 100-200 word use case that depicts your system in a real-world scenario, demonstrating how it would be used and what benefits it brings.
