@@ -186,17 +186,3 @@ Describe the key functions and messages used by your system. You may include flo
 Provide a 100-200 word use case that depicts your system in a real-world scenario, demonstrating how it would be used and what benefits it brings.
 
 ---
-
-## 2. Decision Log
-
-The decision log records technical decisions, their rationale, and evolution of the system. The log should have at least 10 entries, with references to repository documentation where appropriate.
-
-| Date | Trigger / Problem | Options / Alternatives | Evaluation Criteria | Decision and Rationale | AI Usage (if any) | Team Members |
-|------|-------------------|------------------------|---------------------|------------------------|-------------------|--------------|
-| YYYY-MM-DD | Describe what caused this entry | List realistic alternative approaches | Explain how options were compared (metrics: latency, cost, power, etc.) | State the decision taken and rationale | Note how AI contributed and what required human correction | Team member(s) responsible |
-
-*(Repeat rows until you have at least 10 entries.)*
-
----
-
-*Feel free to include this log either in the README or as a separate file as needed.*
