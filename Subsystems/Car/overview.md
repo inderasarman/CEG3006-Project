@@ -30,7 +30,7 @@ Additionally, the vehicle uses internal inputs:
 
 The vehicle unit produces the following outputs:
 
-- [Visual warnings displayed on the HUD  with braking distance](Files/(Files/Car_braking_for_202603262135.mp4)
+- [Visual warnings displayed on the HUD  with braking distance](Files/Car_braking_for_202603262135.mp4)
 - Speed warning indicator if the vehicle is travelling too fast  
 - Continuous transmission of vehicle speed and location to the RSU  
 
