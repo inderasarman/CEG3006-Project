@@ -74,7 +74,9 @@ The vehicle's OBU continuously broadcasts its current speed and GPS location to 
 
 ##### Step 2: Early Vehicle Detection (High-Speed Roads Only)
 
-On roads exceeding 50 km/h, (eg. expressways to street road) an external RSU placed 400 metres before the junction detects the approaching vehicle early.
+On higher-speed roads such as expressways, an external RSU is placed approximately 300–400 metres before the junction to detect approaching vehicles early.
+
+At higher speeds (e.g., 80–100 km/h), the total stopping distance can exceed 100 metres. The extended detection range provides additional buffer time for early warning, ensuring that the driver receives alerts well before entering the critical braking zone.
 
 - Cross-references with the vehicle's transmitted speed and location
 - Provides additional reaction time before the vehicle reaches the crossing
