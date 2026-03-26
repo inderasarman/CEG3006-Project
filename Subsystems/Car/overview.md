@@ -39,7 +39,7 @@ The vehicle unit produces the following outputs:
 The vehicle unit consists of the following components:
 
 - **On-Board Unit (OBU)** — Handles communication and processing of incoming and outgoing data  
-- **Communication Module** — Enables low-latency communication with the RSU
+- **DSRC Module** — Enables low-latency communication with the RSU via IEEE 802.11p
 - **Speed Sensor** — Provides real-time vehicle speed data  
 - **Head-Up Display (HUD)** — Displays warnings and braking information to the driver  
 - **CAN Interface** — Connects internal vehicle systems and distributes relevant data  
@@ -50,8 +50,8 @@ The vehicle unit supports two types of communication:
 
 ### External Communication
 
-- Vehicle communicates with the RSU using low-latency wireless communication
-- Enables real-time transmission of safety-critical messages
+- Vehicle communicates with the RSU using **DSRC (IEEE 802.11p)**
+- Enables low-latency transmission of safety-critical messages
 
 ### Internal Communication
 - Data is shared within the vehicle using the **CAN bus**  

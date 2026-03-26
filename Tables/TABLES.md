@@ -18,6 +18,16 @@
 | LED Strip | Visual warning for pedestrian | Crossing |
 | Audio Alert | Sound warning for pedestrian | Crossing |
 
+## Module Mapping
+
+| Your System                | Module Concept     |
+| -------------------------- | ------------------ |
+| Car ↔ RSU communication    | V2I (DSRC)         |
+| RSU ↔ Pedestrian           | V2P                |
+| Real-time warning          | Safety application |
+| Low latency (<100 ms)      | DSRC requirement   |
+| Car sending speed/location | WAVE messages      |
+
 ## System Parameters
 
 | Parameter | Value |
