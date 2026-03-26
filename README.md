@@ -172,17 +172,14 @@ The system improves safety by:
 Explain the overall architecture of your system. Include diagrams, figures, or drawings that show how components interact.
 
 ### Functions and Messages
-Describe the key functions and messages used by your system. You may include flow charts, pseudocode, or tables to illustrate how data flows between parts of the system.
+
+#### Message Flow
+
+See [Tables/TABLES.md](Tables/TABLES.md#message-flow)
 
 ### Hardware Components and Parameters
 
-| # | Component | Function | Range | Latency | Bandwidth |
-|---|-----------|----------|-------|---------|-----------|
-| 1 | RSU — Junction Unit (LiDAR + Camera) | Detects pedestrians and vehicles at the crossing | 30-50m | <50ms | 10 Mbps |
-| 2 | RSU — External Unit (LiDAR + Camera) | Early vehicle detection on high-speed roads (>50 km/h) | ~50m before junction | <50ms | 10 Mbps |
-| 3 | Vehicle OBU (On-Board Unit) | Transmits vehicle speed and location to RSU | 100-500m | <50ms | 5 Mbps |
-| 4 | Vehicle HUD (Head-Up Display) | Displays braking distance and collision warnings to driver | In-cabin | <100ms | N/A |
-| 5 | Pedestrian Alert System (LED strip + Audio) | Alerts pedestrians of approaching vehicles | At crossing | <100ms | N/A |
+See [Tables/TABLES.md](Tables/TABLES.md#hardware-list) for the hardware list and [system parameters](Tables/TABLES.md#system-parameters).
 
 ### Use Case
 Provide a 100-200 word use case that depicts your system in a real-world scenario, demonstrating how it would be used and what benefits it brings.
