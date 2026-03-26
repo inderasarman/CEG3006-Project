@@ -8,7 +8,7 @@ Smart Blind Junction V2P Safety System
 
 This project proposes a Vehicle-to-Pedestrian (V2P) safety system designed to improve road safety at blind, non-signalised junctions. The system leverages roadside sensing and low-latency communication to detect potential collision risks and provide real-time warnings to both drivers and pedestrians.
 
-The solution focuses on environments where traditional traffic control systems are not available, such as blind corners, car park exits, and obstructed junctions.
+The solution focuses on environments where traditional traffic control systems are deterministic on user actions, primarily zebra crossings.
 
 ### Project Objective
 
@@ -25,7 +25,7 @@ The system aims to:
 
 ### Problem Statement
 
-Blind and non-signalised junctions pose a significant safety risk due to limited visibility and lack of control infrastructure.
+Non-signalised junctions pose a significant safety risk due to limited visibility and lack of control infrastructure.
 
 At such locations:
 
@@ -44,13 +44,12 @@ Existing solutions rely heavily on human judgement and do not provide predictive
 - Head-Up Display (HUD)
 - Speed sensor
 - Communication module
-- Onboard processing system
+- Onboard processing system (OBU)
 
 ##### Pedestrian System
 
 - Ground LED strip for visual alerts
 - Audio alert system
-- Optional wearable or mobile device integration
 
 ##### Road Side Unit (RSU)
 
@@ -65,7 +64,7 @@ Both configurations use the same RSU hardware:
 - LiDAR sensor — detects both pedestrians and approaching vehicles
 - Camera — provides visual confirmation of detected objects
 - Communication module — receives vehicle speed and location data from the OBU; sends collision risk warnings
-- Edge processing unit — computes braking distance based on received vehicle data
+- Edge processing unit — computes braking distance based on received vehicle data *(double confirm)*
 
 #### System Flow
 
@@ -75,7 +74,7 @@ The vehicle's OBU continuously broadcasts its current speed and GPS location to 
 
 ##### Step 2: Early Vehicle Detection (High-Speed Roads Only)
 
-On roads exceeding 50 km/h, an external RSU placed ~50 metres before the junction detects the approaching vehicle early.
+On roads exceeding 50 km/h, (eg. expressways to street road) an external RSU placed 400 metres before the junction detects the approaching vehicle early.
 
 - Cross-references with the vehicle's transmitted speed and location
 - Provides additional reaction time before the vehicle reaches the crossing
@@ -92,7 +91,7 @@ The RSU at the pedestrian crossing uses LiDAR and camera to detect:
 The RSU processes all available data:
 
 - Vehicle speed and location (received from OBU)
-- Braking distance calculation
+- Braking distance calculation (from both car and RSU)
 - Pedestrian position (from LiDAR and camera)
 
 ##### Step 4: Collision Risk Prediction
@@ -114,7 +113,7 @@ The RSU sends warning signals between the vehicle and pedestrian using low-laten
 
 ##### Step 6: Driver Alert
 
-The driver receives warnings via the vehicle HUD:
+The driver receives warnings via the vehicle heads up display (HUD):
 
 - Braking distance visualization
 - Warning indicator for unsafe speed
