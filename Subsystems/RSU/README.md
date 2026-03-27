@@ -38,7 +38,7 @@ The RSU produces the following outputs:
 
 The RSU consists of the following components:
 
-- **LiDAR Sensor** — primary sensor for detecting pedestrians and vehicles within the junction area (detection range: 50–70 m; up to 300–400 m for high-speed external RSU)
+- **LiDAR Sensor** — primary sensor for detecting pedestrians and vehicles within the junction area (detection range: 50–70 m; up to 300 m for high-speed external RSU)
 - **Camera** — provides visual confirmation of LiDAR detections and supports object classification
 - **DSRC Communication Module** — handles low-latency wireless communication with the vehicle OBU via IEEE 802.11p
 - **Edge Processing Unit** — runs the collision risk algorithm and braking distance calculations locally at the junction
@@ -64,7 +64,7 @@ The system supports two RSU deployment configurations based on road speed limit:
 Used at junctions with a speed limit at or below 50 km/h. One RSU is mounted at the pedestrian crossing and handles all detection, processing, and communication.
 
 ### Dual RSU (High-Speed Roads)
-Used where the speed limit exceeds 50 km/h (e.g., expressway-to-residential transitions). An additional external RSU is placed approximately 300–400 metres before the junction. This external RSU detects vehicles early and cross-references their transmitted speed and location to provide increased reaction time before the vehicle enters the critical braking zone.
+Used where the speed limit exceeds 50 km/h (e.g., expressway-to-residential transitions). An additional external RSU is placed approximately 150 metres before the junction. This external RSU detects vehicles early and cross-references their transmitted speed and location to provide increased reaction time before the vehicle enters the critical braking zone.
 
 Both configurations use the same RSU hardware.
 
@@ -79,6 +79,6 @@ If a pedestrian is detected near or entering the crossing while a vehicle is app
 The RSU is designed as the single point of truth for collision risk in the system. By centralising detection and processing at the roadside, the solution avoids placing computational burden on the vehicle or pedestrian units. This approach ensures:
 
 - Consistent and accurate risk assessments across all road users
-- Low-latency alert delivery within the system's <100 ms communication target
+- Low-latency alert delivery within the system's < 300 ms communication target
 - Scalability — the same RSU hardware supports both single and dual deployment configurations
 - Independence from vehicle or pedestrian-owned hardware for detection
