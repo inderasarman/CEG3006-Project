@@ -51,12 +51,13 @@ Class RSU:
 
 	def start_advertise(self):
 		# begins advertising on network with included GPS coordinate of pedestrian crossing
-		self.vnu.start(self.crossing_gps_coord)
+		self.vnu.start()
 		
-		# Starts new thread for new connection to each vehicle
+		# handles new thread for each new connection to each vehicle
 		# thread tracks its own vehicle in self.vnu.vehicles, holding all vehicles
-		# config passed in that can be used to evaluate alert to from crossing_decision()
-		self.vnu.register_connection_handler(self.threshold_config)
+		# config used to evaluate alert to from crossing_decision()
+		# crossing_gps_coord used to calculate distance to crossing
+		self.vnu.register_connection_handler()
 		
 	def get_vehicle_info(self):
 		# After each vehicle joins the service, this function is used for RSU to get vehicle details, collectively stored in self.vnu.vehicles
@@ -67,10 +68,16 @@ Class RSU:
 		self.vnu.vehicle_respond(vehicle_id, decision_result)
 
 	def set_safety_level(self):
+		# function to warn pedestrians
+
+		# turn off safety when no vehicles
 		if not self.vnu.vehicles:
 			set_safety(OFF)
 			return
-			
+
+		# safety level is accessed and updated by each vnu connection thread
+		set_safety(self.vnu.safety_level)
+
 
 if __name__ == "__main__":
 	# initialises RSU
