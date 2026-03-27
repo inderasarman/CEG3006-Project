@@ -6,6 +6,9 @@ from enum import Enum
 # CONFIGURABLE PARAMETERS
 # =========================
 
+# Speed limit of the road in km/h
+SPEED_LIMIT = 60
+
 # Estimated system + driver reaction time (seconds)
 # Includes perception, decision, and actuation delay before braking starts
 # Larger value → more conservative (longer stopping distance)
@@ -35,17 +38,9 @@ MASS_EXPONENT = 0.6
 # Accounts for positioning uncertainty and safety margin
 CROSSING_BUFFER_M = 5.0
 
-# Threshold for "safe" operation (dimensionless ratio)
-# Defined on R = D_cross / D_required
-# R >= SAFE_THRESHOLD → sufficient margin for normal driving
-# Larger value → stricter requirement to be considered safe
-SAFE_THRESHOLD = 1.5
-
-# Threshold for mandatory stop (dimensionless ratio)
-# R < STOP_THRESHOLD → insufficient stopping distance → must stop
-# Typically set to 1.0 (physical stopping limit)
-# Increasing this makes the system more conservative
-STOP_THRESHOLD = 1.0
+# Constant threshold margin in metres
+# For configuring of when to send cautioning message
+SAFE_MARGIN_M = 5.0
 
 # Risk scaling factor (dimensionless)
 # Used in risk score calculation: Risk = 1 - D_cross / (k * D_required)
@@ -71,10 +66,15 @@ class CrossingModelConfig:
     reference_mass_kg: float
     mass_exponent: float
     crossing_buffer_m: float
-    safe_threshold: float
-    stop_threshold: float
+    safe_margin_m: float
     risk_multiplier: float
 
+    def __post_init__(self):
+        self.verify_configs()
+
+    def verify_configs(self):
+        # Implementation to validate configs
+        
 
 def create_default_config() -> CrossingModelConfig:
     return CrossingModelConfig(
@@ -83,7 +83,7 @@ def create_default_config() -> CrossingModelConfig:
         reference_mass_kg=REFERENCE_MASS_KG,
         mass_exponent=MASS_EXPONENT,
         crossing_buffer_m=CROSSING_BUFFER_M,
-        safe_threshold=SAFE_THRESHOLD,
+        safe_margin_m=SAFE_MARGIN_M,
         stop_threshold=STOP_THRESHOLD,
         risk_multiplier=RISK_MULTIPLIER,
     )
@@ -94,6 +94,7 @@ def create_default_config() -> CrossingModelConfig:
 # =========================
 
 def required_stopping_distance(speed_mps, vehicle_mass_kg, config):
+    # required stopping distance influence by configurations
     reaction_distance = speed_mps * config.reaction_time_s
 
     mass_factor = (vehicle_mass_kg / config.reference_mass_kg) ** config.mass_exponent
@@ -103,24 +104,25 @@ def required_stopping_distance(speed_mps, vehicle_mass_kg, config):
     return reaction_distance + braking_distance + config.crossing_buffer_m
 
 
-def safety_ratio(distance_to_crossing_m, speed_mps, vehicle_mass_kg, config):
-    d_req = required_stopping_distance(speed_mps, vehicle_mass_kg, config)
-    return distance_to_crossing_m / d_req if d_req > 0 else float("inf")
-
-
-def risk_score(distance_to_crossing_m, speed_mps, vehicle_mass_kg, config):
-    d_req = required_stopping_distance(speed_mps, vehicle_mass_kg, config)
-    raw = 1.0 - (distance_to_crossing_m / (config.risk_multiplier * d_req))
-    return max(0.0, min(1.0, raw))
+def stopping_margin(distance_to_crossing_m, speed_mps, vehicle_mass_kg, config):
+    # margin for stopping, taking into account threshold paramters
+    return distance_to_crossing_m - required_stopping_distance(speed_mps, vehicle_mass_kg, config)
 
 
 def crossing_decision(distance_to_crossing_m, speed_mps, vehicle_mass_kg, config):
-    r = safety_ratio(distance_to_crossing_m, speed_mps, vehicle_mass_kg, config)
+    if speed_mps > SPEED_LIMIT:
+        return CrossingDecision.MUST_STOP
 
-    if r >= config.safe_threshold:
+    margin = stopping_margin(distance_to_crossing_m, speed_mps, vehicle_mass_kg, config)
+
+    # see if safety margin is fulfilled
+    if margin >= config.safe_margin_m:
         return CrossingDecision.NORMAL
-    elif r >= config.stop_threshold:
+    # safety margin unfulfilled, send warning
+    elif margin >= 0.0:
         return CrossingDecision.CAUTION
+    # not meeting threshold requirements (actual braking distance accounting threshold params > actual distance to crossing)
+    # send emergency alert to vehicle
     else:
         return CrossingDecision.MUST_STOP
 
@@ -131,12 +133,7 @@ def evaluate_crossing(distance_to_crossing_m, speed_mps, vehicle_mass_kg, config
     risk = risk_score(distance_to_crossing_m, speed_mps, vehicle_mass_kg, config)
     decision = crossing_decision(distance_to_crossing_m, speed_mps, vehicle_mass_kg, config)
 
-    return {
-        "required_stopping_distance_m": d_req,
-        "safety_ratio": r,
-        "risk_score": risk,
-        "decision": decision.value,
-    }
+    return get_alert_level(r, risk)
 
 
 # =========================
@@ -153,8 +150,7 @@ def evaluate_crossing(distance_to_crossing_m, speed_mps, vehicle_mass_kg, config
 #     REFERENCE_MASS_KG,
 #     MASS_EXPONENT,
 #     CROSSING_BUFFER_M,
-#     SAFE_THRESHOLD,
-#     STOP_THRESHOLD,
+#     SAFE_MARGIN_M,
 #     RISK_MULTIPLIER,
 # )
 #
