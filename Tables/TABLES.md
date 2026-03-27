@@ -2,11 +2,12 @@
 
 ## Message Flow
 
-| Source | Destination | Message | Purpose |
-| ------ | ----------- | ------- | ------- |
-| Vehicle OBU | RSU | Speed, GPS, Vehicle Weight | Inform RSU of vehicle state |
-| RSU | Vehicle | Risk Warning | Alert driver |
-| RSU | Pedestrian System | Alert Signal | Warn pedestrian |
+| Source | Destination | Message | Protocol | Trigger |
+| ------ | ----------- | ------- | -------- | ------- |
+| Vehicle OBU | RSU | Speed, GPS location, Vehicle Weight | DSRC (IEEE 802.11p) | Continuous while driving |
+| RSU (External) | RSU (Junction) | Vehicle detected early | Serial | Vehicle enters detection range |
+| RSU | Vehicle OBU | Risk warning, braking distance | DSRC (IEEE 802.11p) | Collision risk detected |
+| RSU | Pedestrian System | Alert signal | Serial | Pedestrian detected + risk present |
 
 ## Hardware List
 
