@@ -45,3 +45,5 @@
 > Maximum Detection Range with LiDAR takes LiDAR's range into account.
 > 
 > 2nd RSU is placed 150m away from 1st RSU at the pedestrian crossing.
+>
+> 300 ms latency was deemed sufficient in comparison to estimated human reaction time of 200 ms to give drivers enough time to react.
