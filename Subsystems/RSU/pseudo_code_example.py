@@ -1,26 +1,27 @@
 Class RSU:
 	def __init__(self):
-		self.cam = camera()			// init camera object for pedestrian detection
-		self.ps = pedestrianSafety()		// init pedestrianSafety object to control pedestrian safety system
-		self.vnu = vehicleNetworkUnit()		// init networking unit to handle vehicle communication
+		self.cam = camera()			# init camera object for pedestrian detection
+		self.ps = pedestrianSafety()		# init pedestrianSafety object to control pedestrian safety system
+		self.vnu = vehicleNetworkUnit()		# init networking unit to handle vehicle communication
 
-		self.pedestrian_flag = false		// init to false, no pedestrian detected
-		self.vehicle_data = {			// init placeholder for vehicle data
+		self.pedestrian_flag = false		# init to false, no pedestrian detected
+		self.vehicle_data = {			# init placeholder for vehicle data
 			"vehicle_id" = 0,
 			"speed": 0,
 			"braking_dist": 0,
 			"dist_to_cross": 0
 		}
 
-		self.threshold_limits = {		// init placeholder for configurable limits
+		self.threshold_limits = {		# init placeholder for configurable limits
 			"speed": 0 ,
 			"braking_dist": 0,
 			"dist_to_cross": 0
 		}
 
-		self.crossing_gps_coord = "1°23'51.2"N 103°54'12.9"E"	// init static coordinates of pedestrian crossing
-	
-	def set_threshold(self, int spd, int bdist, int dist2c):	// Configurable based on city planner/traffic designer requirements
+		self.crossing_gps_coord = "1°23'51.2\"N 103°54'12.9\"E"	# init static coordinates of pedestrian crossing
+
+	# Configurable based on city planner/traffic designer requirements
+	def set_threshold(self, int spd, int bdist, int dist2c):	
 		self.threshold_limits["speed"] = spd
 		self.threshold_limits["braking_dist"] = bdist
 		self.threshold_limits["dist_to_cross"] = dist2c
@@ -39,8 +40,8 @@ Class RSU:
 			self.ps.alarm(HIGH)	// Louder & Faster beeping
 
 	def detect_pedestrian(self):
-		// camera uses computer vision to scan for objects in surroundings,
-		// identified objects have their names added to an array, camera_vision_objects
+		# camera uses computer vision to scan for objects in surroundings,
+		# identified objects have their names added to an array, camera_vision_objects
 		cam.get_camera_objects()
 
 		if ("person" in cam.camera_vision_objects):
@@ -49,10 +50,10 @@ Class RSU:
 			self.pedestrian_flag = false
 
 	def start_advertise(self):
-		// begins advertising on network with included GPS coordinate of pedestrian crossing
+		# begins advertising on network with included GPS coordinate of pedestrian crossing
 		self.vnu.start(self.crossing_gps_coord)
 		
-		// handles any new connection to the vnu, supports multiple connections
+		# handles any new connection to the vnu, supports multiple connections
 		self.vnu.register_connection_handler()
 		
 	def get_vehicle_info(self):
@@ -78,7 +79,7 @@ if __name__ == "__main__":
 	myRSU = RSU()
 
 	myRSU.start_advertise()
-	myRSU.set_threshold(40, 10, 50)	// in kmph, meter, meter
+	myRSU.set_threshold(40, 10, 50)	# in kmph, meter, meter
 	myRSU.set_safety(OFF)
 
 	while true:
