@@ -41,5 +41,7 @@
 | Braking Time | Configurable by threshold |
 
 > Maximum Detection Range takes into account maximum line-of-sight range of DSRC communication from RSU to vehicles.
+> 
 > Maximum Detection Range with LiDAR takes LiDAR's range into account.
+> 
 > 2nd RSU is placed 150m away from 1st RSU at the pedestrian crossing.
