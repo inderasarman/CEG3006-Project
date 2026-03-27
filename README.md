@@ -263,6 +263,8 @@ By the end of the project, I feel that the team was cohesive and arrived at a po
 
 ### Cheston
 
+This project gave me a much clearer sense of how many trade‑offs sit behind a roadside safety system. I went in thinking mostly about getting the detection logic to work, but along the way found out more about the need for various additional information such as power, installation complexity, and accessibility for different types of pedestrians. Choosing things like mid‑range sensing, LED plus audio alerts, and a weather‑resistant enclosure showed me that engineering is often about picking what is appropriate rather than what is technically maximal. I also became more aware of the needs of different types of users and how design choices can have a direct impact on their comfort and safety. The project has made me aware of how the solutions are able to fits its real‑world context and the people who will interact with it.
+
 ### Muhammad
 
 ### Indera

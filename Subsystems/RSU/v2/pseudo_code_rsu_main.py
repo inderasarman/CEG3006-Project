@@ -11,12 +11,8 @@ Class RSU:
 		self.pedestrian_flag = false		# init to false, no pedestrian detected
 		self.set_safety(OFF)				# init to "OFF" safety
 
-		self.threshold_limits = {		# init placeholder for configurable limits
-			"speed": 0 ,
-			"braking_dist": 0,
-			"dist_to_cross": 0
-		}
-
+		self.threshold_config = create_default_config()		# Default threshold config, adjustable by RSU / road, specified in pseudo_code_rsu_threshold
+		
 		self.crossing_gps_coord = "1°23'51.2\"N 103°54'12.9\"E"	# init static coordinates of pedestrian crossing
 
 	def set_threshold(self, spd, bdist, dist2c):
@@ -25,7 +21,7 @@ Class RSU:
 
 		# some implementation 
 
-	def set_safety(self, severity, ):
+	def set_safety(self, severity):
 		if severity == OFF:
 			self.ps.lights(OFF)
 			self.ps.alarm(OFF)
@@ -43,36 +39,44 @@ Class RSU:
 		# identified objects have their names added to an array, camera_vision_objects
 		cam.get_camera_objects()
 
-		if ("person" in cam.camera_vision_objects):
+		if "elderly" in cam.camera_vision_objects:
+			self.config.activate_enhanced_threshold()
+		else:
+			self.config.deactivate_enhanced_threshold()
+
+		if "person" in cam.camera_vision_objects:
 			self.pedestrian_flag = true
 		else:
 			self.pedestrian_flag = false
 
 	def start_advertise(self):
 		# begins advertising on network with included GPS coordinate of pedestrian crossing
-		self.vnu.start(self.crossing_gps_coord)
+		self.vnu.start()
 		
-		# Starts new thread for new connection to each vehicle
+		# handles new thread for each new connection to each vehicle
 		# thread tracks its own vehicle in self.vnu.vehicles, holding all vehicles
+		# config used to evaluate alert to from crossing_decision()
+		# crossing_gps_coord used to calculate distance to crossing
 		self.vnu.register_connection_handler()
 		
 	def get_vehicle_info(self):
-		# After vehicle joins the service, this function is called to get vehicle details, stored in self.vnu.vehicles
+		# After each vehicle joins the service, this function is used for RSU to get vehicle details, collectively stored in self.vnu.vehicles
 		self.vnu.request(vehicle_info_get_request)
 
+	def send_vehicle_advisory(self, vehicle_id, decision_result):
+		# After each vehicle joins the service, this function is used by RSU to send vehicle safety advisories, collectively stored in self.vnu.vehicles
+		self.vnu.vehicle_respond(vehicle_id, decision_result)
+
 	def set_safety_level(self):
+		# function to warn pedestrians
+
+		# turn off safety when no vehicles
 		if not self.vnu.vehicles:
 			set_safety(OFF)
 			return
-			
-		for veh_id, vehicle in self.vnu.vehicles.items():
-			if (vehicle["speed"] >= self.threshold_limits["speed"] OR
-			   vehicle["braking_dist"] >= self.threshold_limits["braking_dist"]) AND
-			   vehicle["dist_to_cross"] <= self.threshold_limits["dist_to_cross"]:
-				set_safety(RED)
-				break
-			else:
-				set_safety(AMBER)
+
+		# safety level is accessed and updated by each vnu connection thread
+		set_safety(self.vnu.safety_level)
 
 
 if __name__ == "__main__":
@@ -80,7 +84,6 @@ if __name__ == "__main__":
 	myRSU = RSU()
 
 	myRSU.start_advertise()
-	myRSU.set_threshold(40, 10, 50)	# in kmph, meter, meter
 
 	while true:
 		myRSU.detect_pedestrian()
