@@ -77,7 +77,7 @@ The system supports two deployment configurations depending on the speed limit o
 
 [**Single RSU (standard junctions)**](Diagrams/SystemFlow.png) — Used at locations with lower speed limits. One RSU is mounted at the pedestrian crossing and handles all detection and communication.
 
-[**Dual RSU (high-speed roads)**](Diagrams/SystemFlow-2_RSU.png) — Used where the speed limit exceeds 50 km/h (e.g., expressway-to-residential transitions). An additional external RSU is placed approximately 150 metres before the junction to provide earlier vehicle detection and increased reaction time.
+[**Dual RSU (high-speed roads)**](Diagrams/SystemFlow-2_RSU.png) — Used where the speed limit exceeds 50 km/h (e.g., expressway-to-residential transitions). An additional external RSU is placed approximately 150 metres before the junction to provide earlier vehicle detection and increased reaction time. The RSUs will be connected to each other through underground fibre optic cables to ensure quick and reliable relay of information between them.
 
 Both configurations use the same RSU hardware:
 
