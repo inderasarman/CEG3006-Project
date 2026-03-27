@@ -53,6 +53,10 @@ Existing solutions rely heavily on human judgement and do not provide predictive
 
 ## 3. System Architecture
 
+[System Diagram (1 RSU)](Diagrams/SystemOverview.png)
+
+[System Diagram (2 RSU)](Diagrams/SystemOverview-2_RSU.png)
+
 #### Components
 
 ##### [Vehicle Unit](Subsystems/Car/README.md)
@@ -71,9 +75,9 @@ Existing solutions rely heavily on human judgement and do not provide predictive
 
 The system supports two deployment configurations depending on the speed limit of the road:
 
-**Single RSU (standard junctions)** — Used at locations with lower speed limits. One RSU is mounted at the pedestrian crossing and handles all detection and communication.
+[**Single RSU (standard junctions)**](Diagrams/SystemFlow.png) — Used at locations with lower speed limits. One RSU is mounted at the pedestrian crossing and handles all detection and communication.
 
-**Dual RSU (high-speed roads)** — Used where the speed limit exceeds 50 km/h (e.g., expressway-to-residential transitions). An additional external RSU is placed approximately 150 metres before the junction to provide earlier vehicle detection and increased reaction time.
+[**Dual RSU (high-speed roads)**](Diagrams/SystemFlow-2_RSU.png) — Used where the speed limit exceeds 50 km/h (e.g., expressway-to-residential transitions). An additional external RSU is placed approximately 150 metres before the junction to provide earlier vehicle detection and increased reaction time.
 
 Both configurations use the same RSU hardware:
 
