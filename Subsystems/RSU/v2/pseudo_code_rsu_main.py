@@ -83,13 +83,13 @@ if __name__ == "__main__":
 	# initialises RSU
 	myRSU = RSU()
 
-	myRSU.start_advertise()
-
 	while true:
 		myRSU.detect_pedestrian()
 
 		if myRSU.pedestrian_flag == true:
+			myRSU.start_advertise()
 			myRSU.get_vehicle_info()
 			myRSU.set_safety_level()
 		else:
+			myRSU.stop_advertise()
 			myRSU_set_safety(OFF)
