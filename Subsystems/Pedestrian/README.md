@@ -7,7 +7,7 @@ The pedestrian unit acts as the pedestrian-facing component of the system. Its p
 ## Key Responsibilities
 
 - Receive collision risk warnings from the RSU
-- Alert pedestrians through visual and audio feedback
+- Alert pedestrians through visual and audio feedback - caters for visual and audio impaired persons
 - Escalate warning intensity based on risk level
 - Deter pedestrians from entering the crossing when a collision risk is detected
 
