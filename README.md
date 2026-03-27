@@ -90,7 +90,7 @@ The vehicle's OBU continuously broadcasts its current speed and GPS location to 
 
 ##### Step 2: Early Vehicle Detection (High-Speed Roads Only)
 
-On higher-speed roads such as expressways, an external RSU is placed approximately 300–400 metres before the junction to detect approaching vehicles early.
+On higher-speed roads such as expressways, an external RSU is placed approximately 150 metres before the junction to detect approaching vehicles early.
 
 At higher speeds (e.g., 80–100 km/h), the total stopping distance can exceed 100 metres. The extended detection range provides additional buffer time for early warning, ensuring that the driver receives alerts well before entering the critical braking zone.
 
@@ -109,18 +109,21 @@ The RSU at the pedestrian crossing uses LiDAR and depth camera to detect:
 The RSU processes all available data:
 
 - Vehicle speed and location (received from OBU)
-- Braking distance calculation (from both car and RSU)
-- Pedestrian position (from LiDAR and depth camera)
+- Braking distance calculation (from both vehicle and RSU threshold parameters)
+- Pedestrian position (from depth camera)
+- First vehicle (from LiDAR)
 
 ##### Step 4: Collision Risk Prediction
 
 The system evaluates whether a collision may occur based on:
 
-- Relative distance
+- Relative distance from crossing
 - Vehicle speed
-- Stopping capability
+- Stopping capability based on vehicle weight
 
 The system determines if the vehicle can safely stop before reaching the pedestrian.
+
+> Assumed that computer vision model running on the LiDAR sensor can be trained to estimate vehicle weight. In future, vehicle architectures can be enhanced to estimate vehicle weight in the vehicle's suspension modules, for weight data to be tracked by the OBU.
 
 ##### Step 5: Communication
 
@@ -133,7 +136,7 @@ The RSU sends warning signals between the vehicle and pedestrian using low-laten
 
 The driver receives warnings via the vehicle heads up display (HUD):
 
-- Braking distance visualization
+- [Braking distance visualization](Files/AR_HUD_Driving.gif)
 - Warning indicator for unsafe speed
 
 The display is designed to be minimal and non-intrusive.
@@ -155,6 +158,7 @@ Both parties respond to the warning:
 - Pedestrian delays crossing
 
 This prevents potential collisions before entering the junction.
+
 ## 4. Features and Improvements
 
 ### Key Features
@@ -165,7 +169,7 @@ This prevents potential collisions before entering the junction.
 - Predictive collision risk analysis based on vehicle data and sensor input
 - Bidirectional communication between vehicle and pedestrian
 - Multi-modal feedback (visual and audio)
-- Non-redundant design focused on blind, non-signalised junctions
+- Focused on blind, non-signalised junctions
 
 ### System Outcome
 
@@ -177,6 +181,7 @@ The system improves safety by:
 
 ### Future Improvements
 
+- Remote configurations set by server to RSU
 - Integration of AI-based pedestrian behaviour prediction
 - Adaptive warning thresholds based on weather and lighting conditions
 - Integration with smart infrastructure systems
