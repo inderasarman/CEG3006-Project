@@ -185,3 +185,70 @@ See [Tables/TABLES.md](Tables/TABLES.md#hardware-list) for the hardware list and
 Provide a 100-200 word use case that depicts your system in a real-world scenario, demonstrating how it would be used and what benefits it brings.
 
 ---
+
+#### AI Prompts and responses
+
+### Prompt 1: 
+
+From the given pseudo code below, describe any ambiguities pertaining to the overall flow. Disregard any improper technical implementation and syntax. [include pseudo code written]
+
+### Response 1:
+
+Ambiguities in the Code
+Dictionary Comparison in set_safety_level
+
+The condition self.vehicle_data > self.threshold_limits is unclear because both operands are dictionaries. Python does not define a natural ordering for dicts, and the intended meaning is likely a per‑field comparison (e.g., speed > threshold_speed or braking distance > threshold_braking or distance to crossing > threshold_distance). Without explicit logic, the behaviour is undefined.
+
+Priority of Safety States
+
+In set_safety_level, if vnu.connections is true, the method immediately sets AMBER, regardless of the vehicle data values. This means that even if the vehicle data exceed the thresholds (which would warrant a RED alert), the system never reaches RED because the elif branch is skipped. The intended priority is ambiguous; possibly the designer meant to check thresholds first and then fall back to AMBER only if no threshold is exceeded but a connection exists.
+
+Asynchronous Nature of Vehicle Information Retrieval
+
+get_vehicle_info sends a request and immediately checks vnu.ready. There is no mechanism to wait for a response or to handle multiple vehicles. In a real system, this would require a callback, a polling loop, or an event‑driven approach. The pseudo‑code assumes an instantaneous, blocking response.
+
+Undefined Constants and Values
+
+The severities OFF, AMBER, RED, and alarm levels LOW, HIGH are used but never defined. They are likely global constants, but their absence in the snippet creates ambiguity about their exact values or states.
+
+Initial set_safety(OFF) Call
+
+The main block calls set_safety(OFF) before the loop. Inside the loop, when pedestrian_flag is false, no safety‑level update occurs. Therefore the system remains OFF until a pedestrian is detected. This may be intended, but the code does not explicitly revert to OFF after a pedestrian leaves the scene. Once a pedestrian is detected, the state is set by set_safety_level and stays that way even after the pedestrian disappears (unless the loop later sets it again when a new pedestrian appears). This could lead to stale alerts.
+
+Vehicle Data Structure
+
+The vehicle_data dictionary stores only one vehicle’s information, but a roadside unit typically interacts with multiple vehicles. The code does not specify how multiple vehicles are handled; it overwrites vehicle_data each time get_vehicle_info is called, likely using data from the last‑responding vehicle. Which vehicle’s data should be considered for safety decisions is not addressed.
+
+vnu.connections vs. vnu.ready
+
+The code uses vnu.connections in set_safety_level and vnu.ready in get_vehicle_info. The relationship between these two attributes is not explained – e.g., whether ready implies at least one connection, or whether they are independent. This could affect the logic when a connection exists but no data is ready.
+
+Threshold Units and Values
+
+The thresholds are set as integers (40, 10, 50) but their units are not specified. This makes it unclear how they should be compared with actual vehicle data. Also, the distance to crossing threshold (dist_to_cross) is set to 50, but the initial vehicle_data entry for that field is 0; it is not obvious what scale is used.
+
+Camera Object Detection
+
+cam.get_camera_objects() presumably populates cam.camera_vision_objects. However, the method does not store the result locally; it relies on an attribute that may be updated asynchronously. The pseudo‑code does not indicate any delay or guarantee that the object list is current at the moment of checking.
+
+These ambiguities would need to be resolved in a concrete implementation to ensure the system behaves as intended.
+
+---
+
+#### Individual Reflection
+
+### Alfred
+I was able to contribute to the team's efforts by adding the original versions of the system flowcharts and pseudo code. 
+The overall flow was done after much discussion with the team to come to a consensus on what we expect of the system.
+There were some disagreements that happened over certain decisions but it was ultimately resolved by considering the engineering factors and cross-referencing with the objectives.
+After deliberation, myself with the help of a teammate made the amendments to the flowcharts and pseudo code to better align with the key points of discussion.
+By the end of the project, I feel that the team was cohesive and arrived at a potentially viable solution that could see further testing and implementation.
+
+### Max
+
+### Cheston
+
+### Muhammad
+
+### Indera
+
