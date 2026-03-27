@@ -34,7 +34,7 @@
 
 | Parameter | Value |
 | --------- | ----- |
-| Speed Limit | 60 km/h |
+| Speed Limit | 50 km/h (Normal roads) / 90 km/h (Expressways) |
 | Maximum Detection Range | 1000 m (1 RSU) / 1150 m (2 RSU) |
 | Maximum Detection Range with LiDAR | 150 m (1 RSU) / 300 m (2 RSU) |
 | Required Communication Latency | < 300 ms |
