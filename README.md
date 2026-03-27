@@ -266,6 +266,72 @@ cam.get_depth camera_objects() presumably populates cam.depth camera_vision_obje
 
 These ambiguities would need to be resolved in a concrete implementation to ensure the system behaves as intended.
 
+### Prompt 2:
+Prompt: What should the formula be in the context of vehicles, for the relationship between braking distance and distance to pedestrian crossing (potential mandatory stop for vehicle), with a tunable theshold value so that its not just (braking distance must be < distance to pedestrian crossing) but (some function of braking distance, with tunning variable < distance to pedestrian crossing), or the other way around with tunable variable inside function of distance to pedestrian crossing
+
+### Response 2:
+Dcross​>k(vtr​+2av2​)+d0​
+
+where:
+𝑘 is the tunable threshold multiplier
+𝑑0 is an extra fixed margin
+
+This is better than using an exponential directly, because braking already depends on 𝑣2, so the relationship is already nonlinear. Adding an exponential on top usually makes it harder to justify and tune.
+
+### Discussion:
+The response given was not an ideal formula as it did not take into account different breaking distance of varrying car weights which would affect the vehicle's deceleration speeed. Further prompts had to be made to claerly express the right formulas and variables needed which was : Dreq​=vtr​+(V^2/2aref)​((mi/mref​​​)^p)+d0 
+
+where:
+𝑣 = vehicle speed
+𝑡𝑟= response time
+𝑎ref = baseline deceleration for a reference vehicle
+𝑚𝑖 = current vehicle mass or class-equivalent mass
+𝑚ref= reference mass
+𝑝 = tunable vehicle sensitivity
+𝑘 = overall safety multiplier
+𝑑0= fixed crossing buffer
+
+### Prompt 3: The safety_ratio function doesn't seem to make much sense. Can you clarify?
+
+### Response 3:
+* Snippet of the response*
+Make one function compute all metrics once.
+
+```python
+def crossing_metrics(distance_to_crossing_m, speed_mps, vehicle_mass_kg, config):
+    d_req = required_stopping_distance(speed_mps, vehicle_mass_kg, config)
+    margin = distance_to_crossing_m - d_req
+    ratio = distance_to_crossing_m / d_req if d_req > 0 else float("inf")
+
+    overspeed = speed_mps > SPEED_LIMIT
+
+    if overspeed:
+        decision = CrossingDecision.MUST_STOP
+        risk = 1.0
+    else:
+        if ratio >= config.safe_threshold:
+            decision = CrossingDecision.NORMAL
+        elif ratio >= config.stop_threshold:
+            decision = CrossingDecision.CAUTION
+        else:
+            decision = CrossingDecision.MUST_STOP
+
+        raw_risk = 1.0 - (distance_to_crossing_m / (config.risk_multiplier * d_req)) if d_req > 0 else 0.0
+        risk = max(0.0, min(1.0, raw_risk))
+
+    return {
+        "required_stopping_distance_m": d_req,
+        "stopping_margin_m": margin,
+        "safety_ratio": ratio,
+        "risk_score": risk,
+        "decision": decision,
+        "overspeed": overspeed,
+    }
+```
+
+### Discussion: 
+A previous input from ChatGPT was used to formulate the decision matrix of to determine if the pedestrain could cross junction. However there were formulas that were incorrect and  unclear in logic where further prompts were needed to clarify and improve the initial formula provided by chatGPT.
+
 ---
 
 #### Individual Reflection
