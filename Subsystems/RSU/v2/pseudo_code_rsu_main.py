@@ -8,6 +8,8 @@ Class RSU:
 		
 		self.vnu = vehicleNetworkUnit()		# init networking unit to handle vehicle communication
 
+		self.logger = dataLoggerToBackend()	# init data logger to log to backend server
+
 		self.pedestrian_flag = false		# init to false, no pedestrian detected
 		self.set_safety(OFF)				# init to "OFF" safety
 
@@ -46,8 +48,12 @@ Class RSU:
 
 		if "person" in cam.camera_vision_objects:
 			self.pedestrian_flag = true
+			# Start logger to log data
+			self.logger.start_logger()
 		else:
 			self.pedestrian_flag = false
+			# Stop logger
+			self.logger.stop_logger()
 
 	def start_advertise(self):
 		# begins advertising on network with included GPS coordinate of pedestrian crossing
@@ -57,6 +63,7 @@ Class RSU:
 		# thread tracks its own vehicle in self.vnu.vehicles, holding all vehicles
 		# config used to evaluate alert to from crossing_decision()
 		# crossing_gps_coord used to calculate distance to crossing
+		# logger used to send logs
 		self.vnu.register_connection_handler()
 		
 	def get_vehicle_info(self):
