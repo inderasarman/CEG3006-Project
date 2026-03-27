@@ -62,6 +62,7 @@ class CrossingDecision(str, Enum):
 @dataclass
 class CrossingModelConfig:
     reaction_time_s: float
+    reaction_speed_multiplier: float
     reference_deceleration_mps2: float
     reference_mass_kg: float
     mass_exponent: float
@@ -74,6 +75,12 @@ class CrossingModelConfig:
 
     def verify_configs(self):
         # Implementation to validate configs
+
+    def activate_enhanced_threshold(self):
+        # implementation to adjust threshold
+    
+    def deactivate_enhanced_threshold(self):
+        # implementation to adjust threshold
         
 
 def create_default_config() -> CrossingModelConfig:
@@ -95,7 +102,7 @@ def create_default_config() -> CrossingModelConfig:
 
 def required_stopping_distance(speed_mps, vehicle_mass_kg, config):
     # required stopping distance influence by configurations
-    reaction_distance = speed_mps * config.reaction_time_s
+    reaction_distance = speed_mps * config.reaction_time_s * config.reaction_speed_multiplier
 
     mass_factor = (vehicle_mass_kg / config.reference_mass_kg) ** config.mass_exponent
 
