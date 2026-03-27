@@ -23,13 +23,12 @@
 
 ## Module Mapping
 
-| Your System                | Module Concept     |
-| -------------------------- | ------------------ |
-| Car ↔ RSU communication    | V2I, V2P (DSRC)    |
-| RSU ↔ Pedestrian           | V2P                |
-| Real-time warning          | Safety application |
-| Low latency (<100 ms)      | DSRC requirement   |
-| Car sending speed/location | WAVE messages      |
+| System Function            | Module Concept     | Description                                        |
+| -------------------------- | ------------------ | -------------------------------------------------- |
+| Car ↔ RSU communication    | V2I (DSRC)         | Vehicle communicates with roadside infrastructure  |
+| RSU ↔ Pedestrian           | V2P                | Infrastructure delivers warnings to pedestrians    |
+| Real-time warning          | Safety application | Collision risk alert triggered by RSU logic        |
+| Low latency (<100 ms)      | DSRC requirement   | Communication delay constraint for safety messages |
 
 ## System Parameters
 
