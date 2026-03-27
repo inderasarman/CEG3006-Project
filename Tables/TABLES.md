@@ -12,11 +12,13 @@
 
 | Component | Function | Location |
 | --------- | -------- | -------- |
-| RSU (LiDAR + Camera) | Detect vehicles and pedestrians | Junction |
+| RSU ([LiDAR](https://www.seyond.com/products/falcon-k1/) + [Depth Camera](https://amicus.com.sg/products/intel-r-realsense-tm-depth-camera-d455f/)) | Detect vehicles and pedestrians | Junction |
 | Vehicle OBU | Transmit speed, weight and location | Vehicle |
 | HUD | Display warnings to driver | Vehicle |
 | LED Strip | Visual warning for pedestrian | Crossing |
 | Audio Alert | Sound warning for pedestrian | Crossing |
+
+> Example LiDAR's max range is 500m. System assumes max LiDAR range as 150m for reliability.
 
 ## Module Mapping
 
@@ -37,3 +39,7 @@
 | Maximum Detection Range with LiDAR | 150 m (1 RSU) / 300 m (2 RSU) |
 | Required Communication Latency | < 300 ms |
 | Braking Time | Configurable by threshold |
+
+> Maximum Detection Range takes into account maximum line-of-sight range of DSRC communication from RSU to vehicles.
+> Maximum Detection Range with LiDAR takes LiDAR's range into account.
+> 2nd RSU is placed 150m away from 1st RSU at the pedestrian crossing.
