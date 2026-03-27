@@ -31,13 +31,12 @@ The pedestrian unit consists of the following components:
 
 - **Ground LED Strip** — provides a highly visible, ground-level visual cue to warn pedestrians at the crossing
 - **Audio Alert System** — emits warning sounds to reach pedestrians who may not be looking at the ground
-- **Wireless Receiver Module** — receives alert signals from the RSU via low-latency communication
 
 ## Communication
 
 The pedestrian unit receives one-way communication from the RSU:
 
-- RSU transmits alert signals to the pedestrian unit using low-latency wireless communication
+- RSU transmits alert signals to the pedestrian unit via serial communication
 - No outbound communication is required from the pedestrian unit
 
 ## Operational Behaviour

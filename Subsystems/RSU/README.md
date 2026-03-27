@@ -40,7 +40,7 @@ The RSU consists of the following components:
 
 - **LiDAR Sensor** — primary sensor for detecting pedestrians and vehicles within the junction area (detection range: 50–70 m; up to 300–400 m for high-speed external RSU)
 - **Camera** — provides visual confirmation of LiDAR detections and supports object classification
-- **DSRC Communication Module** — handles low-latency wireless communication with the vehicle OBU and pedestrian unit via IEEE 802.11p
+- **DSRC Communication Module** — handles low-latency wireless communication with the vehicle OBU via IEEE 802.11p
 - **Edge Processing Unit** — runs the collision risk algorithm and braking distance calculations locally at the junction
 
 ## Communication
@@ -54,7 +54,7 @@ The RSU supports bidirectional communication:
 ### Outbound
 
 - Sends collision risk warnings and braking distance to the vehicle unit via **DSRC (IEEE 802.11p)**
-- Sends alert trigger signals to the pedestrian unit via low-latency wireless communication
+- Sends alert trigger signals to the pedestrian unit via serial communication
 
 ## Deployment Configurations
 
@@ -72,7 +72,7 @@ Both configurations use the same RSU hardware.
 
 The RSU continuously scans the junction area using LiDAR and camera. When a vehicle's OBU begins transmitting speed and location data, the RSU fuses this with its sensor readings to compute a braking distance and evaluate whether the vehicle can safely stop before reaching the crossing.
 
-If a pedestrian is detected near or entering the crossing while a vehicle is approaching, the RSU calculates the collision risk level and transmits warnings simultaneously to both the vehicle unit via DSRC and the pedestrian unit via low-latency wireless communication. The risk level is updated in real time as conditions change.
+If a pedestrian is detected near or entering the crossing while a vehicle is approaching, the RSU calculates the collision risk level and transmits warnings simultaneously to both the vehicle unit via DSRC and the pedestrian unit via serial communication. The risk level is updated in real time as conditions change.
 
 ## Design Considerations
 

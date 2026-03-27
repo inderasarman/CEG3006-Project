@@ -179,8 +179,6 @@ The system improves safety by:
 
 ## 5. System Architecture Diagram
 
-Explain the overall architecture of your system. Include diagrams, figures, or drawings that show how components interact.
-
 ### Functions and Messages
 
 #### Message Flow
@@ -276,4 +274,4 @@ To enhance clarity and communication, I used Gemini to generate an AI simulated 
 
 ### Indera
 
-Throughout the project, I was responsible for designing and implementing the overall repository structure and baseline documentation template, which served as the foundation for all subsequent work. This required careful consideration of how to organise subsystem content in a way that was both technically coherent and easy to navigate, especially as the system evolved. I developed and iteratively refined the Car subsystem overview to ensure it accurately represented the system architecture and communication flow, particularly in incorporating DSRC based on IEEE 802.11p to reflect the low latency requirements of V2X safety applications. One challenge was balancing technical accuracy with clarity, as early drafts were either too simplified or overly detailed. I also contributed to the development of the module mapping table together with my team, which helped strengthen the conceptual link between our design and key vehicular networking concepts such as V2I, V2P, and WAVE messaging. Through this process, I improved in structuring technical documentation with both engineering depth and readability in mind.
+Throughout the project, I was responsible for designing and implementing the overall repository structure and baseline documentation template, which served as the foundation for all subsequent work. This required careful consideration of how to organise subsystem content in a way that was both technically coherent and easy to navigate, especially as the system evolved. I developed and iteratively refined the Car subsystem overview to ensure it accurately represented the system architecture and communication flow, particularly in incorporating DSRC based on IEEE 802.11p to reflect the low latency requirements of V2X safety applications. One challenge was balancing technical accuracy with clarity, as early drafts were either too simplified or overly detailed. I also contributed to the development of the module mapping table together with my team, which helped strengthen the conceptual link between our design and key vehicular networking concepts such as V2I, V2P, and DSRC. Through this process, I improved in structuring technical documentation with both engineering depth and readability in mind.
