@@ -191,6 +191,8 @@ The table above outlines the messages exchanged between the vehicle, RSU, and pe
 
 ### Hardware Components and Parameters
 
+The hardware components span across the vehicle, the RSU at the junction, and the pedestrian crossing. Each component plays a specific role in enabling real-time detection, communication, and alerting within the system.
+
 See [Hardware List](Tables/TABLES.md#hardware-list) and [System Parameters](Tables/TABLES.md#system-parameters).
 
 ### Use Case
