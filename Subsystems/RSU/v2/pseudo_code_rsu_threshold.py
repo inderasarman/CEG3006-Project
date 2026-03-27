@@ -127,15 +127,6 @@ def crossing_decision(distance_to_crossing_m, speed_mps, vehicle_mass_kg, config
         return CrossingDecision.MUST_STOP
 
 
-def evaluate_crossing(distance_to_crossing_m, speed_mps, vehicle_mass_kg, config):
-    d_req = required_stopping_distance(speed_mps, vehicle_mass_kg, config)
-    r = distance_to_crossing_m / d_req if d_req > 0 else float("inf")
-    risk = risk_score(distance_to_crossing_m, speed_mps, vehicle_mass_kg, config)
-    decision = crossing_decision(distance_to_crossing_m, speed_mps, vehicle_mass_kg, config)
-
-    return get_alert_level(r, risk)
-
-
 # =========================
 # EXAMPLE USAGE
 # =========================
