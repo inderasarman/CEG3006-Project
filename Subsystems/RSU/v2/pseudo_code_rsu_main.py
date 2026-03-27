@@ -1,16 +1,15 @@
 Class RSU:
 	def __init__(self):
 		self.cam = camera()			# init camera object for pedestrian detection
+		self.lidar = lidar()		# init lidar object for vehicle detection
+		
 		self.ps = pedestrianSafety()		# init pedestrianSafety object to control pedestrian safety system
+		self.va = vehicleAdvisory()			# init vehicleAdvisory object to provide appropriate vehicle advisory
+		
 		self.vnu = vehicleNetworkUnit()		# init networking unit to handle vehicle communication
 
 		self.pedestrian_flag = false		# init to false, no pedestrian detected
-		self.vehicle_data = {			# init placeholder for vehicle data
-			"vehicle_id" = 0,
-			"speed": 0,
-			"braking_dist": 0,
-			"dist_to_cross": 0
-		}
+		self.set_safety(OFF)				# init to "OFF" safety
 
 		self.threshold_limits = {		# init placeholder for configurable limits
 			"speed": 0 ,
@@ -20,13 +19,13 @@ Class RSU:
 
 		self.crossing_gps_coord = "1°23'51.2\"N 103°54'12.9\"E"	# init static coordinates of pedestrian crossing
 
-	# Configurable based on city planner/traffic designer requirements
-	def set_threshold(self, int spd, int bdist, int dist2c):	
+	def set_threshold(self, spd, bdist, dist2c):
+		# Configurable based on city planner/traffic designer requirements
 		self.threshold_limits["speed"] = spd
-		self.threshold_limits["braking_dist"] = bdist
-		self.threshold_limits["dist_to_cross"] = dist2c
 
-	def set_safety(self, severity):
+		# some implementation 
+
+	def set_safety(self, severity, ):
 		if severity == OFF:
 			self.ps.lights(OFF)
 			self.ps.alarm(OFF)
@@ -53,34 +52,35 @@ Class RSU:
 		# begins advertising on network with included GPS coordinate of pedestrian crossing
 		self.vnu.start(self.crossing_gps_coord)
 		
-		# handles any new connection to the vnu, supports multiple connections
+		# Starts new thread for new connection to each vehicle
+		# thread tracks its own vehicle in self.vnu.vehicles, holding all vehicles
 		self.vnu.register_connection_handler()
 		
 	def get_vehicle_info(self):
+		# After vehicle joins the service, this function is called to get vehicle details, stored in self.vnu.vehicles
 		self.vnu.request(vehicle_info_get_request)
-		
-		if (self.vnu.ready == OK):
-			self.vehicle_data = self.vnu.data
 
 	def set_safety_level(self):
-		if self.vnu.connections > 0:
-			if (self.vehicle_data["speed"] >= self.threshold_limits["speed"] OR
-			   self.vehicle_data["braking_dist"] >= self.threshold_limits["braking_dist"]) AND
-			   self.vehicle_data["dist_to_cross"] <= self.threshold_limits["dist_to_cross"]:
+		if not self.vnu.vehicles:
+			set_safety(OFF)
+			return
+			
+		for veh_id, vehicle in self.vnu.vehicles.items():
+			if (vehicle["speed"] >= self.threshold_limits["speed"] OR
+			   vehicle["braking_dist"] >= self.threshold_limits["braking_dist"]) AND
+			   vehicle["dist_to_cross"] <= self.threshold_limits["dist_to_cross"]:
 				set_safety(RED)
+				break
 			else:
 				set_safety(AMBER)
-		
-		else:
-			set_safety(OFF)
 
 
 if __name__ == "__main__":
+	# initialises RSU
 	myRSU = RSU()
 
 	myRSU.start_advertise()
 	myRSU.set_threshold(40, 10, 50)	# in kmph, meter, meter
-	myRSU.set_safety(OFF)
 
 	while true:
 		myRSU.detect_pedestrian()
