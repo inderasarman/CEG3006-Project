@@ -117,14 +117,21 @@ def crossing_decision(distance_to_crossing_m, speed_mps, vehicle_mass_kg, config
 
     # see if safety margin is fulfilled
     if margin >= config.safe_margin_m:
-        return CrossingDecision.NORMAL
+        final_decision = CrossingDecision.NORMAL
     # safety margin unfulfilled, send warning
     elif margin >= 0.0:
-        return CrossingDecision.CAUTION
+        final_decision = CrossingDecision.CAUTION
     # not meeting threshold requirements (actual braking distance accounting threshold params > actual distance to crossing)
     # send emergency alert to vehicle
     else:
-        return CrossingDecision.MUST_STOP
+        final_decision = CrossingDecision.MUST_STOP
+
+    return {
+        "safety_margin_m": config.safe_margin_m,               # Safety margin required for the road
+        "distance_to_crossing_m": distance_to_crossing_m,      # Distance of vehicle to crossing
+        "estimated_stopping_margin": margin,                   # Estimated margin for stopping based on threshold (braking distance)
+        "decision": final_decision                             # Decision - Emergency slow down, advisory slow down, none
+    }
 
 
 # =========================
