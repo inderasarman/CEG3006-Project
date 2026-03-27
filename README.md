@@ -193,9 +193,9 @@ See [Hardware List](Tables/TABLES.md#hardware-list) and [System Parameters](Tabl
 
 ### Use Case
 
-At the Lornie Highway exit towards Kheam Hock Road, a zebra crossing is situated along a sharp curve, limiting driver visibility. As a vehicle exits the highway at speed, a Road Side Unit (RSU) positioned 300 metres upstream continuously monitors vehicle data via DSRC (IEEE 802.11p), enabling low-latency V2I communication. The system determines that the vehicle's speed exceeds the safe stopping distance for the crossing ahead.
+At the [Lornie Highway exit towards Kheam Hock Road](Files/Lornie%20highway%20Exit%20to%20Kheam%20hock%20road.png), a zebra crossing is situated along a sharp curve, limiting driver visibility. As a vehicle exits the highway at speed, a Road Side Unit (RSU) positioned 300 metres upstream continuously monitors vehicle data via DSRC (IEEE 802.11p), enabling low-latency V2I communication. The system determines that the vehicle's speed exceeds the safe stopping distance for the crossing ahead.
 
-A warning is immediately transmitted to the vehicle's On-Board Unit (OBU), prompting a real-time braking distance alert on the head-up display (HUD). This allows the driver to decelerate gradually before reaching the hazard zone. Simultaneously, the RSU detects a jogger approaching the crossing using LiDAR and activates ground LED indicators and an audio alert, signalling the pedestrian to wait.
+A warning is immediately transmitted to the vehicle's On-Board Unit (OBU), prompting a real-time braking distance alert on the [head-up display (HUD)](Files/AR_HUD_Driving.gif). This allows the driver to decelerate gradually before reaching the hazard zone. Simultaneously, the RSU detects a jogger approaching the crossing using LiDAR and activates ground LED indicators and an audio alert, signalling the pedestrian to wait.
 
 By combining predictive risk analysis with bidirectional communication, the system enhances situational awareness, reduces reliance on line-of-sight, and proactively prevents potential collisions in complex road environments.
 
