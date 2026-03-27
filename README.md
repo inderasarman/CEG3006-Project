@@ -187,6 +187,8 @@ Explain the overall architecture of your system. Include diagrams, figures, or d
 
 See [Message Flow](Tables/TABLES.md#message-flow)
 
+The table above outlines the messages exchanged between the vehicle, RSU, and pedestrian system. The RSU pseudo code demonstrates how these messages are processed in practice — [RSU v1](Subsystems/RSU/v1/pseudo_code_example.py) covers the initial implementation of the message handling and safety logic, while [RSU v2](Subsystems/RSU/v2/pseudo_code_rsu_main.py) refines this with improved structure, alongside a dedicated [threshold definition file](Subsystems/RSU/v2/pseudo_code_rsu_threshold.py) that governs how incoming vehicle data is evaluated against safety limits.
+
 ### Hardware Components and Parameters
 
 See [Hardware List](Tables/TABLES.md#hardware-list) and [System Parameters](Tables/TABLES.md#system-parameters).
