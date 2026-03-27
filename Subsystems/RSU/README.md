@@ -38,8 +38,8 @@ The RSU produces the following outputs:
 
 The RSU consists of the following components:
 
-- **LiDAR Sensor** — primary sensor for detecting pedestrians and vehicles within the junction area (detection range: 50–70 m; up to 300 m for high-speed external RSU)
-- **Camera** — provides visual confirmation of LiDAR detections and supports object classification
+- **LiDAR Sensor** — supplementary sensor for detecting vehicles within the junction area (up to 300 m for high-speed external RSU)
+- **Camera** — provides detections of pedestrians at/near pedestrian crossings
 - **DSRC Communication Module** — handles low-latency wireless communication with the vehicle OBU via IEEE 802.11p
 - **Edge Processing Unit** — runs the collision risk algorithm and braking distance calculations locally at the junction
 
