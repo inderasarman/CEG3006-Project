@@ -2,43 +2,46 @@
 
 ## Message Flow
 
-| Source | Destination | Message | Protocol | Trigger |
-| ------ | ----------- | ------- | -------- | ------- |
-| Vehicle OBU | RSU | Speed, GPS location | DSRC (IEEE 802.11p) | Continuous while driving |
-| RSU (External) | RSU (Junction) | Vehicle detected early | Serial | Vehicle enters detection range |
-| RSU | Vehicle OBU | Risk warning, braking distance | DSRC (IEEE 802.11p) | Collision risk detected |
-| RSU | Pedestrian System | Alert signal | Serial | Pedestrian detected + risk present |
+| Source | Destination | Message | Purpose |
+| ------ | ----------- | ------- | ------- |
+| Vehicle OBU | RSU | Speed, GPS, Vehicle Weight | Inform RSU of vehicle state |
+| RSU | Vehicle | Risk Warning | Alert driver |
+| RSU | Pedestrian System | Alert Signal | Warn pedestrian |
 
 ## Hardware List
 
 | Component | Function | Location |
 | --------- | -------- | -------- |
-| LiDAR Sensor | Detect vehicles and pedestrians | Junction |
-| Depth Camera | Visual confirmation of detected objects | Junction |
-| Edge Processing Unit | Compute collision risk and braking distance | Junction |
-| DSRC Communication Module | Send and receive messages between RSU and vehicle | Junction + Vehicle |
-| Vehicle OBU | Process incoming warnings and transmit vehicle data | Vehicle |
-| Speed Sensor | Provide real-time vehicle speed | Vehicle |
-| HUD | Display braking distance and warnings to driver | Vehicle |
+| RSU ([LiDAR](https://www.seyond.com/products/falcon-k1/) + [Depth Camera](https://amicus.com.sg/products/intel-r-realsense-tm-depth-camera-d455f/)) | Detect vehicles and pedestrians | Junction |
+| Vehicle OBU | Transmit speed, weight and location | Vehicle |
+| HUD | Display warnings to driver | Vehicle |
 | LED Strip | Visual warning for pedestrian | Crossing |
 | Audio Alert | Audible warning for pedestrian | Crossing |
 
+> Example LiDAR's max range is 500m. System assumes max LiDAR range as 150m for reliability.
+
 ## Module Mapping
 
-| System Function            | Module Concept     | Description                                          |
-| -------------------------- | ------------------ | ---------------------------------------------------- |
-| Car ↔ RSU communication    | V2I (DSRC)         | Vehicle communicates with roadside infrastructure    |
-| RSU ↔ Pedestrian           | V2P                | Infrastructure delivers warnings to pedestrians      |
-| Real-time warning          | Safety application | Collision risk alert triggered by RSU logic          |
-| Low latency (<100 ms)      | DSRC requirement   | Communication delay constraint for safety messages   |
+| Your System                | Module Concept     |
+| -------------------------- | ------------------ |
+| Car ↔ RSU communication    | V2I, V2P (DSRC)    |
+| RSU ↔ Pedestrian           | V2P                |
+| Real-time warning          | Safety application |
+| Low latency (<100 ms)      | DSRC requirement   |
+| Car sending speed/location | WAVE messages      |
 
 ## System Parameters
 
-| Parameter                   | Value       | Notes                              |
-| --------------------------- | ----------- | ---------------------------------- |
-| Speed Limit (Standard)      | 50 km/h     | Single RSU deployment              |
-| Speed Limit (High-speed)    | >50 km/h    | Dual RSU deployment                |
-| Detection Range             | 50–70 m     | Junction RSU                       |
-| High-speed Detection Range  | 300–400 m   | External RSU on high-speed roads   |
-| Communication Latency       | <100 ms     | DSRC requirement                   |
-| Estimated Stopping Time     | 3.5–4.6 s   | Based on vehicle speed at junction |
+| Parameter | Value |
+| --------- | ----- |
+| Speed Limit | 60 km/h |
+| Maximum Detection Range | 1000 m (1 RSU) / 1150 m (2 RSU) |
+| Maximum Detection Range with LiDAR | 150 m (1 RSU) / 300 m (2 RSU) |
+| Required Communication Latency | < 300 ms |
+| Braking Time | Configurable by threshold |
+
+> Maximum Detection Range takes into account maximum line-of-sight range of DSRC communication from RSU to vehicles.
+>
+> Maximum Detection Range with LiDAR takes LiDAR's range into account.
+>
+> 2nd RSU is placed 150m away from 1st RSU at the pedestrian crossing.
