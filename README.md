@@ -17,7 +17,7 @@ Vehicle-to-Pedestrian (V2P) communication has emerged as a key research directio
 
 Building on this foundation, Wu et al. demonstrate a practical DSRC-based V2P system in which vehicles “talk to phones” by exchanging safety messages between equipped vehicles and pedestrians carrying smartphones. Their architecture implements a DSRC stack on the smartphone’s Wi-Fi chipset and leverages GPS and inertial sensors so that both the vehicle and the pedestrian can broadcast position, speed, and heading, enabling real-time collision risk assessment and bidirectional warnings. Field tests reported in their work show that such systems can effectively warn drivers and pedestrians in typical crossing scenarios, but they also expose limitations related to channel congestion, smartphone distraction, and reliance on pedestrians owning, carrying, and correctly operating compatible devices.
 
-Complementary to this, Lee and Kim focus on the energy constraints of mobile devices that act as V2P nodes, noting that continuous safety beaconing quickly depletes smartphone batteries and may limit adoption of purely device-centric V2P approaches. They propose an energy-efficient communication method based on Wi-Fi Direct to reduce power consumption while still supporting timely safety message exchange between vehicles and pedestrians. These findings collectively motivate infrastructure-supported architectures such as the Smart Blind Junction V2P Safety System, which offloads sensing and computation to Road Side Units using LiDAR, cameras, and edge processing, thereby avoiding dependence on pedestrian devices, mitigating energy and usability issues, and targeting high-risk, blind, non-signalised junctions that are under-served by traditional traffic control systems.
+Complementary to this, Lee and Kim focus on the energy constraints of mobile devices that act as V2P nodes, noting that continuous safety beaconing quickly depletes smartphone batteries and may limit adoption of purely device-centric V2P approaches. They propose an energy-efficient communication method based on Wi-Fi Direct to reduce power consumption while still supporting timely safety message exchange between vehicles and pedestrians. These findings collectively motivate infrastructure-supported architectures such as the Smart Blind Junction V2P Safety System, which offloads sensing and computation to Road Side Units using LiDAR, depth cameras, and edge processing, thereby avoiding dependence on pedestrian devices, mitigating energy and usability issues, and targeting high-risk, blind, non-signalised junctions that are under-served by traditional traffic control systems.
 
 ## 2. Project Objective
 
@@ -71,7 +71,7 @@ The system supports two deployment configurations depending on the speed limit o
 Both configurations use the same RSU hardware:
 
 - LiDAR sensor — detects both pedestrians and approaching vehicles
-- Camera — provides visual confirmation of detected objects
+- Depth camera — provides visual confirmation of detected objects
 - Communication module — receives vehicle speed and location data from the OBU; sends collision risk warnings
 - Edge processing unit — computes braking distance based on received vehicle data *(double confirm)*
 
@@ -92,7 +92,7 @@ At higher speeds (e.g., 80–100 km/h), the total stopping distance can exceed 1
 
 ##### Step 3: Junction Monitoring
 
-The RSU at the pedestrian crossing uses LiDAR and camera to detect:
+The RSU at the pedestrian crossing uses LiDAR and depth camera to detect:
 
 - Pedestrians near or entering the crossing area
 - Vehicles approaching the junction
@@ -103,7 +103,7 @@ The RSU processes all available data:
 
 - Vehicle speed and location (received from OBU)
 - Braking distance calculation (from both car and RSU)
-- Pedestrian position (from LiDAR and camera)
+- Pedestrian position (from LiDAR and depth camera)
 
 ##### Step 4: Collision Risk Prediction
 
@@ -154,7 +154,7 @@ This prevents potential collisions before entering the junction.
 
 - Adaptive RSU deployment — single RSU for standard junctions, dual RSU for high-speed roads (>50 km/h)
 - Vehicle OBU transmits speed and location to RSU for accurate braking distance calculation
-- RSU uses LiDAR and camera to detect both pedestrians and vehicles
+- RSU uses LiDAR and depth camera to detect both pedestrians and vehicles
 - Predictive collision risk analysis based on vehicle data and sensor input
 - Bidirectional communication between vehicle and pedestrian
 - Multi-modal feedback (visual and audio)
@@ -242,9 +242,9 @@ Threshold Units and Values
 
 The thresholds are set as integers (40, 10, 50) but their units are not specified. This makes it unclear how they should be compared with actual vehicle data. Also, the distance to crossing threshold (dist_to_cross) is set to 50, but the initial vehicle_data entry for that field is 0; it is not obvious what scale is used.
 
-Camera Object Detection
+Depth camera Object Detection
 
-cam.get_camera_objects() presumably populates cam.camera_vision_objects. However, the method does not store the result locally; it relies on an attribute that may be updated asynchronously. The pseudo‑code does not indicate any delay or guarantee that the object list is current at the moment of checking.
+cam.get_depth camera_objects() presumably populates cam.depth camera_vision_objects. However, the method does not store the result locally; it relies on an attribute that may be updated asynchronously. The pseudo‑code does not indicate any delay or guarantee that the object list is current at the moment of checking.
 
 These ambiguities would need to be resolved in a concrete implementation to ensure the system behaves as intended.
 
