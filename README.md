@@ -34,9 +34,9 @@ The objective of this project is to design a novel V2P application that enhances
 
 The system aims to:
 
-- Reduce collision risk between vehicles and pedestrians
+- Reduce collision risk between vehicles and pedestrians at non-signalised crossings
 - Improve situational awareness for both drivers and pedestrians
-- Provide early and real-time warnings before dangerous situations occur
+- Provide early, real-time warnings to prevent worst-case scenarios (pedestrian-vehicle collisions)
 - Target blind, non-signalised junctions to avoid redundancy with existing systems
 
 ### Problem Statement
@@ -57,8 +57,8 @@ Existing solutions rely heavily on human judgement and do not provide predictive
 
 ##### [Vehicle Unit](Subsystems/Car/README.md)
 
-- Head-Up Display (HUD)
-- Speed sensor
+- [Head-Up Display (HUD)](Files/CarARImagine.png)
+- Accelerometer sensor
 - Communication module
 - Onboard processing system (OBU)
 
@@ -73,14 +73,14 @@ The system supports two deployment configurations depending on the speed limit o
 
 **Single RSU (standard junctions)** — Used at locations with lower speed limits. One RSU is mounted at the pedestrian crossing and handles all detection and communication.
 
-**Dual RSU (high-speed roads)** — Used where the speed limit exceeds 50 km/h (e.g., expressway-to-residential transitions). An additional external RSU is placed approximately 50 metres before the junction to provide earlier vehicle detection and increased reaction time.
+**Dual RSU (high-speed roads)** — Used where the speed limit exceeds 50 km/h (e.g., expressway-to-residential transitions). An additional external RSU is placed approximately 150 metres before the junction to provide earlier vehicle detection and increased reaction time.
 
 Both configurations use the same RSU hardware:
 
-- LiDAR sensor — detects both pedestrians and approaching vehicles
-- Depth camera — provides visual confirmation of detected objects
-- Communication module — receives vehicle speed and location data from the OBU; sends collision risk warnings
-- Edge processing unit — computes braking distance based on received vehicle data *(double confirm)*
+- LiDAR sensor — detects approaching vehicles
+- Depth camera — detects pedestrians at/near pedestrian crossings
+- Communication module — receives vehicle speed and location data from the OBU; sends collision risk warnings; sends pedestrian crossing warnings
+- Edge processing unit — computes braking distance based on received vehicle data and configurable threshold parameters
 
 #### System Flow
 
