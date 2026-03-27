@@ -55,19 +55,19 @@ Existing solutions rely heavily on human judgement and do not provide predictive
 
 #### Components
 
-##### Vehicle Unit
+##### [Vehicle Unit](Subsystems/Car/README.md)
 
 - Head-Up Display (HUD)
 - Speed sensor
 - Communication module
 - Onboard processing system (OBU)
 
-##### Pedestrian System
+##### [Pedestrian System](Subsystems/Pedestrian/README.md)
 
 - Ground LED strip for visual alerts
 - Audio alert system
 
-##### Road Side Unit (RSU)
+##### [Road Side Unit (RSU)](Subsystems/RSU/README.md)
 
 The system supports two deployment configurations depending on the speed limit of the road:
 
