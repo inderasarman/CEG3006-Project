@@ -10,7 +10,16 @@ This project proposes a Vehicle-to-Pedestrian (V2P) safety system designed to im
 
 The solution focuses on environments where traditional traffic control systems are deterministic on user actions, primarily zebra crossings.
 
-### Project Objective
+
+## 2. Literature Review
+
+Vehicle-to-Pedestrian (V2P) communication has emerged as a key research direction for improving the safety of Vulnerable Road Users (VRUs), including pedestrians and cyclists, in mixed traffic environments. Sewalkar and Seitz provide an extensive survey of existing V2P systems and show that they serve both safety and convenience purposes while targeting different VRU groups with diverse mobility patterns and interaction needs. They argue that effective V2P design must consider VRU heterogeneity, the specific pre-crash scenarios being addressed, and the underlying communication technology, and they propose a design framework that organizes these elements as core system parameters. Their work also highlights persistent challenges in integrating VRUs into broader V2X ecosystems, such as ensuring timely communication under non-line-of-sight conditions and avoiding information overload for users.
+
+Building on this foundation, Wu et al. demonstrate a practical DSRC-based V2P system in which vehicles “talk to phones” by exchanging safety messages between equipped vehicles and pedestrians carrying smartphones. Their architecture implements a DSRC stack on the smartphone’s Wi-Fi chipset and leverages GPS and inertial sensors so that both the vehicle and the pedestrian can broadcast position, speed, and heading, enabling real-time collision risk assessment and bidirectional warnings. Field tests reported in their work show that such systems can effectively warn drivers and pedestrians in typical crossing scenarios, but they also expose limitations related to channel congestion, smartphone distraction, and reliance on pedestrians owning, carrying, and correctly operating compatible devices.
+
+Complementary to this, Lee and Kim focus on the energy constraints of mobile devices that act as V2P nodes, noting that continuous safety beaconing quickly depletes smartphone batteries and may limit adoption of purely device-centric V2P approaches. They propose an energy-efficient communication method based on Wi-Fi Direct to reduce power consumption while still supporting timely safety message exchange between vehicles and pedestrians. These findings collectively motivate infrastructure-supported architectures such as the Smart Blind Junction V2P Safety System, which offloads sensing and computation to Road Side Units using LiDAR, cameras, and edge processing, thereby avoiding dependence on pedestrian devices, mitigating energy and usability issues, and targeting high-risk, blind, non-signalised junctions that are under-served by traditional traffic control systems.
+
+## 2. Project Objective
 
 The objective of this project is to design a novel V2P application that enhances the safety and comfort of pedestrians using vehicular communication technologies. The system aims to demonstrate engineering feasibility, originality, and alignment with vehicular network concepts.
 
@@ -35,7 +44,7 @@ At such locations:
 
 Existing solutions rely heavily on human judgement and do not provide predictive or real-time safety alerts.
 
-### System Architecture
+## 3. System Architecture
 
 #### Components
 
@@ -139,6 +148,7 @@ Both parties respond to the warning:
 - Pedestrian delays crossing
 
 This prevents potential collisions before entering the junction.
+## 4. Features and Improvements
 
 ### Key Features
 
@@ -167,7 +177,7 @@ The system improves safety by:
 
 ---
 
-### System Architecture Diagram
+## 5. System Architecture Diagram
 
 Explain the overall architecture of your system. Include diagrams, figures, or drawings that show how components interact.
 
